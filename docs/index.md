@@ -1,5 +1,5 @@
 # Modules
-## [apm](/docs/apm.md)
-## [apm.tk](/docs/tk.md)
-## [apm.api](/docs/api.md)
-## [apm.server](/docs/server.md)
+## [apm](apm.md)
+## [apm.tk](tk.md)
+## [apm.api](api.md)
+## [apm.server](server.md)
