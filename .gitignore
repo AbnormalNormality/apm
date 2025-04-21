@@ -1,6 +1,8 @@
-install.sh
-installAndUpload.sh
+
 upload.sh
 alia_apm.egg-info/
 build/
 dist/
+uploadPyPi.sh
+localInstall.sh
+pipInstall.sh
