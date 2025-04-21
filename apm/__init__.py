@@ -1,16 +1,20 @@
 from typing import Any, Callable, TypeVar, ParamSpec
+from os import system
+from sys import platform
 
 
 P = ParamSpec("P")
 R = TypeVar("R")
 
+FUNCTION = Callable[..., object]
+
 
 class FunctionRegistry:
     def __init__(self):
-        self.events: dict[str, Callable[..., object]] = {}
+        self.events: dict[str, FUNCTION] = {}
         self._pending_name: str | None = None
 
-    def __call__(self, arg: str | Callable[..., object]) -> Callable[..., object] | Callable[[Callable[..., object]], Callable[..., object]]:
+    def __call__(self, arg: str | FUNCTION) -> FUNCTION | Callable[[FUNCTION], FUNCTION]:
         if isinstance(arg, str):
             self._pending_name = arg
             return self
@@ -21,7 +25,7 @@ class FunctionRegistry:
             self._pending_name = None
             return func
 
-    def __getattr__(self, name: str) -> Callable[..., object]:
+    def __getattr__(self, name: str) -> FUNCTION:
         if name in self.__dict__:
             return self.__dict__[name]
 
@@ -39,10 +43,20 @@ class FunctionRegistry:
             return False
 
 
-__all__ = ["FunctionRegistry"]
+def clear_console():
+    if platform.startswith("linux") or platform == "darwin":
+        system("clear")
+        
+    elif platform.startswith("win"):
+        system("cls")
+
+
+__all__ = ["FunctionRegistry", "clear_console", "FUNCTION"]
 
 
 if __name__ == '__main__':
+    clear_console()
+
     class Mailbox:
         def __init__(self):
             self.event = FunctionRegistry()
