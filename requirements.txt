@@ -1,2 +1,0 @@
-discord>=2.0
-twitchio

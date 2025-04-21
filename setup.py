@@ -3,9 +3,6 @@ from setuptools import setup, find_packages
 with open("README.md", encoding="utf-8") as file:
     long_description = file.read()
 
-with open("requirements.txt") as file:
-    requirements = file.read().splitlines()
-
 setup(
     name="alia-apm",
     version="0.1.14",
@@ -27,6 +24,9 @@ setup(
         "Operating System :: OS Independent",
     ],
 
-    install_requires=requirements,
+    install_requires=[
+        "discord>=2.0",
+        "twitchio"
+    ],
     python_requires=">=3.12",
 )
