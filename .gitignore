@@ -6,3 +6,4 @@ pipInstall.sh
 alia_apm.egg-info/
 build/
 dist/
+.vscode/
