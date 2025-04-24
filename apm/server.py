@@ -6,6 +6,7 @@ from json import dumps, loads
 from datetime import datetime
 from apm import FunctionRegistry, FUNCTION
 from typing import TypedDict, Literal
+from uuid import getnode
 
 
 class Server:
@@ -89,6 +90,7 @@ class DecodedMessage(TypedDict):
     message: str
     encodeTime: datetime
     decodeTime: datetime
+    macId: str
 
 
 def decode_message(raw_data: bytes) -> list[DecodedMessage]:
@@ -112,7 +114,8 @@ def decode_message(raw_data: bytes) -> list[DecodedMessage]:
 def encode_message(message: Any) -> bytes:
     data = {
         "message": message,
-        "encodeTime": datetime.now().isoformat()
+        "encodeTime": datetime.now().isoformat(),
+        "macId": f"{getnode():012x}"
     }
     return f"{dumps(data)}\x00".encode("utf-8")
 

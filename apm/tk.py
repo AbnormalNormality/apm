@@ -42,6 +42,12 @@ class APMMisc(Misc):
         self.set_rows(*row_weights)
         self.set_columns(*column_weights)
 
+    def rows(self) -> int:
+        return self.grid_size()[1]
+
+    def columns(self) -> int:
+        return self.grid_size()[0]
+
 
 class APMTk(Tk, APMMisc):
     def __init__(self, title: Optional[str] = None, resize: tuple[int | float, int | float] | None = (1/2, 1/2), center: bool = True, *args, **kwargs):
@@ -132,9 +138,9 @@ class ScrollingFrame(APMFrame):
     def on_canvas_configure(self, event: Event):
         self.canvas.configure(scrollregion=self.canvas.bbox("all"))
         self.canvas.itemconfig(self.id, width=event.width)
+        self.canvas.configure(background=self.cget("background"))
 
     def on_frame_configure(self, event: Event):
-        self.canvas.configure(background=self.cget("background"))
         self.on_canvas_configure(event)
         self.canvas.bind_all("<MouseWheel>", self.mouse_scroll)
 
@@ -166,6 +172,9 @@ class ScrollingFrame(APMFrame):
 
         except TclError:
             self._unbind_mousewheel()
+
+    def grid(self, **kwargs): self.frame.grid(**kwargs)
+    def pack(self, **kwargs): self.frame.pack(**kwargs)
 
 
 __all__ = ["APMTk", "ScrollingFrame", "APMFrame"]
