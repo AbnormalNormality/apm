@@ -5,7 +5,7 @@ with open("README.md", encoding="utf-8") as file:
 
 setup(
     name="alia-apm",
-    version="0.1.18",
+    version="0.1.18.1",
     description="A collection of Python scripts by me, Alia.",
     long_description=long_description,
     long_description_content_type="text/markdown",
