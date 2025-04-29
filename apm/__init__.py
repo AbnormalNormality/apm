@@ -61,7 +61,12 @@ def clear_console():
         system("cls")
 
 
-__all__ = ["FunctionRegistry", "clear_console", "FUNCTION"]
+class DefaultClass:
+    def __repr__(self) -> str:
+        return f"{type(self).__name__}({", ".join([f"{k}: {repr(v)}" for k, v in self.__dict__.items() if not k.startswith("_")])})"
+
+
+__all__ = ["FunctionRegistry", "clear_console", "DefaultClass"]
 
 
 if __name__ == '__main__':
