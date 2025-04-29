@@ -1,6 +1,7 @@
 from typing import Any, Callable, TypeVar, ParamSpec
 from os import system
 from sys import platform
+from copy import deepcopy
 
 
 P = ParamSpec("P")
@@ -32,14 +33,7 @@ class FunctionRegistry:
             return self._events[name]
 
         else:
-            return self._DefaultFunction()
-
-    class _DefaultFunction:
-        def __call__(self, *args: Any, **kwds: Any):
-            return None
-
-        def __bool__(self) -> bool:
-            return False
+            return EmptyFunction()
 
     def _register(self, name: str, func: FUNCTION) -> FUNCTION:
         if name in self.__dict__.keys() or name in self.__dir__():
@@ -65,8 +59,20 @@ class DefaultClass:
     def __repr__(self) -> str:
         return f"{type(self).__name__}({", ".join([f"{k}: {repr(v)}" for k, v in self.__dict__.items() if not k.startswith("_")])})"
 
+    def copy(self):
+        return deepcopy(self)
 
-__all__ = ["FunctionRegistry", "clear_console", "DefaultClass"]
+
+class EmptyFunction:
+    def __call__(self, *args: Any, **kwds: Any):
+        return None
+
+    def __bool__(self) -> bool:
+        return False
+
+
+__all__ = ["FunctionRegistry", "clear_console",
+           "DefaultClass", "EmptyFunction"]
 
 
 if __name__ == '__main__':
